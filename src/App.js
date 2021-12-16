@@ -1,23 +1,42 @@
-import logo from './logo.svg';
+import React, { useState } from 'react'
+import { ReactDOM } from 'react';
+import ListItem from './ListItem'
 import './App.css';
 
 function App() {
+  const [itemList,setItemList]=useState('')
+  const [item,setItem]=useState([])
+  const itemEvent=(event)=>{
+    setItemList(event.target.value)
+  }
+  const clickButton=(event)=>{
+    setItem((oldData)=>{
+      return [...oldData,itemList]
+    })
+    setItemList('')
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <div className='center'>
+     <>
+    <br/>
+    <h1>Todos List</h1>
+    <br/>
+    <input type="text" name="itemList" placeholder="Add items" onChange={itemEvent} value={itemList} />  
+    <button onClick={clickButton}>+</button>  
+     </>
+    
+     <ul >
+     
+    { item.map((data,index)=>{
+      return (<ListItem key={index} text={data} />
+        
+        )
+     })}
+     </ul>
+     </div>
+     
     </div>
   );
 }
